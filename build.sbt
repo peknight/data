@@ -8,9 +8,10 @@ lazy val data = (project in file("."))
   .aggregate(
     dataCore.jvm,
     dataCore.js,
-    dataCore.native,
   )
 
-lazy val dataCore = (crossProject(JVMPlatform, JSPlatform, NativePlatform) in file("data-core"))
+lazy val dataCore = (crossProject(JVMPlatform, JSPlatform) in file("data-core"))
   .settings(name := "data-core")
-  .settings(crossDependencies(typelevel.cats))
+  .settings(crossDependencies(
+    peknight.codec,
+  ))
