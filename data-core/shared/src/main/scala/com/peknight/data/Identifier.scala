@@ -11,7 +11,7 @@ trait Identifier:
   override def toString: String = value
 end Identifier
 object Identifier:
-  private case class Identifier(value: String) extends data.Identifier
+  case class Identifier(value: String) extends data.Identifier
   def apply(value: String): data.Identifier = Identifier(value)
   given stringCodecIdentifier[F[_]: Applicative]: Codec[F, String, String, data.Identifier] =
     Codec.map[F, String, String, data.Identifier](_.value)(apply)
