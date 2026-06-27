@@ -5,13 +5,10 @@ commonSettings
 
 lazy val data = (project in file("."))
   .settings(name := "data")
-  .aggregate(
-    dataCore.jvm,
-    dataCore.js,
-  )
+  .aggregate(dataCore.projectRefs *)
 
-lazy val dataCore = (crossProject(JVMPlatform, JSPlatform) in file("data-core"))
+lazy val dataCore = (projectMatrix in file("data-core"))
   .settings(name := "data-core")
-  .settings(crossDependencies(
-    peknight.codec,
-  ))
+  .settings(libraryDependencies ++= dependencies(peknight.codec))
+  .jvmPlatform(scalaVersions = Seq(scala.scala3.version))
+  .jsPlatform(scalaVersions = Seq(scala.scala3.version))
